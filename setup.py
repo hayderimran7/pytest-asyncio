@@ -1,27 +1,12 @@
-import re
 from pathlib import Path
 
 from setuptools import setup, find_packages
 
 
-def find_version():
-    version_file = (
-        Path(__file__)
-        .parent.joinpath("pytest_asyncio", "__init__.py")
-        .read_text()
-    )
-    version_match = re.search(
-        r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M
-    )
-    if version_match:
-        return version_match.group(1)
-
-    raise RuntimeError("Unable to find version string.")
-
-
 setup(
     name="pytest-asyncio",
-    version=find_version(),
+    use_scm_version={"write_to": "pytest_asyncio/_version.py"},
+    setup_requires=["setuptools-scm"],
     packages=find_packages(),
     url="https://github.com/pytest-dev/pytest-asyncio",
     license="Apache 2.0",
